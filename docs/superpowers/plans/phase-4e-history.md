@@ -13,7 +13,7 @@
 **Files:**
 - Create: `client/src/pages/History.tsx`
 
-- [ ] **Step 1: Create History page**
+- [x] **Step 1: Create History page**
 
 Create `client/src/pages/History.tsx`:
 
@@ -113,17 +113,9 @@ export default function History() {
 }
 ```
 
-- [ ] **Step 2: Wire into App router**
+- [x] **Step 2: Wire into App router**
 
-In `client/src/App.tsx`, replace the `History` placeholder with:
-
-```tsx
-import History from './pages/History'
-```
-
-Remove old inline `function History() { ... }`.
-
-- [ ] **Step 3: Verify build**
+- [x] **Step 3: Verify build**
 
 ```bash
 cd client && npm run build
@@ -131,7 +123,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add History page with session list"
@@ -144,7 +136,7 @@ git add client/src/ && git commit -m "feat: add History page with session list"
 **Files:**
 - Create: `client/src/pages/SessionDetail.tsx`
 
-- [ ] **Step 1: Create SessionDetail page**
+- [x] **Step 1: Create SessionDetail page**
 
 Create `client/src/pages/SessionDetail.tsx`:
 
@@ -252,7 +244,7 @@ export default function SessionDetail() {
 }
 ```
 
-- [ ] **Step 2: Wire into App router**
+- [x] **Step 2: Wire into App router**
 
 In `client/src/App.tsx`, replace the `SessionDetail` placeholder with:
 
@@ -262,7 +254,7 @@ import SessionDetail from './pages/SessionDetail'
 
 Remove old inline `function SessionDetail() { ... }`.
 
-- [ ] **Step 3: Verify build**
+- [x] **Step 3: Verify build**
 
 ```bash
 cd client && npm run build
@@ -270,7 +262,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add Session Detail page with exercise log tables"
