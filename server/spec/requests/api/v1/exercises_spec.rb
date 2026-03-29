@@ -12,6 +12,29 @@ RSpec.describe 'Api::V1::Exercises', type: :request do
       json = JSON.parse(response.body)
       expect(json['data'].length).to eq(2)
     end
+
+    it 'returns each exercise with only its own metrics' do
+      exercise1 = create(:exercise, name: 'Bench Press', exercise_type: :built_in)
+      create(:exercise_metric, exercise: exercise1, name: 'sets', metric_type: :integer)
+      create(:exercise_metric, exercise: exercise1, name: 'reps', metric_type: :integer)
+      create(:exercise_metric, exercise: exercise1, name: 'weight', metric_type: :decimal, unit: 'lbs')
+
+      exercise2 = create(:exercise, name: 'Running', exercise_type: :built_in)
+      create(:exercise_metric, exercise: exercise2, name: 'duration', metric_type: :integer, unit: 'min')
+
+      get '/api/v1/exercises'
+
+      json = JSON.parse(response.body)
+      bench_press = json['data'].find { |e| e['attributes']['name'] == 'Bench Press' }
+      running = json['data'].find { |e| e['attributes']['name'] == 'Running' }
+
+      bp_metric_ids = bench_press['relationships']['exercise_metrics']['data'].map { |m| m['id'] }
+      run_metric_ids = running['relationships']['exercise_metrics']['data'].map { |m| m['id'] }
+
+      expect(bp_metric_ids.length).to eq(3)
+      expect(run_metric_ids.length).to eq(1)
+      expect(bp_metric_ids).not_to include(*run_metric_ids)
+    end
   end
 
   describe 'GET /api/v1/exercises/:id' do
