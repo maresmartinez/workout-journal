@@ -1,9 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import Dashboard from './pages/Dashboard'
 
-function Dashboard() {
-  return <div className="p-6"><h1 className="text-2xl font-bold">Dashboard</h1><p className="mt-2 text-gray-600">Coming soon</p></div>
-}
 function Exercises() {
   return <div className="p-6"><h1 className="text-2xl font-bold">Exercises</h1><p className="mt-2 text-gray-600">Coming soon</p></div>
 }
