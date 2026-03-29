@@ -11,25 +11,25 @@
 **Files:**
 - Create: `client/` (entire React app skeleton)
 
-- [ ] **Step 1: Scaffold React TypeScript app with Vite**
+- [x] **Step 1: Scaffold React TypeScript app with Vite**
 
 ```bash
 npm create vite@latest client -- --template react-ts
 ```
 
-- [ ] **Step 2: Install dependencies**
+- [x] **Step 2: Install dependencies**
 
 ```bash
 cd client && npm install react-router-dom axios @tanstack/react-query recharts
 ```
 
-- [ ] **Step 3: Install dev dependencies**
+- [x] **Step 3: Install dev dependencies**
 
 ```bash
 cd client && npm install -D tailwindcss @tailwindcss/vite vitest @testing-library/react @testing-library/jest-dom @testing-library/user-event jsdom @types/react-router-dom eslint prettier
 ```
 
-- [ ] **Step 4: Configure Tailwind CSS**
+- [x] **Step 4: Configure Tailwind CSS**
 
 Replace `client/vite.config.ts`:
 
@@ -57,7 +57,7 @@ Replace `client/src/index.css`:
 @import 'tailwindcss';
 ```
 
-- [ ] **Step 5: Configure Vitest**
+- [x] **Step 5: Configure Vitest**
 
 Add to `client/vite.config.ts`:
 
@@ -91,7 +91,7 @@ Create `client/src/test/setup.ts`:
 import '@testing-library/jest-dom'
 ```
 
-- [ ] **Step 6: Verify build works**
+- [x] **Step 6: Verify build works**
 
 ```bash
 cd client && npm run build
@@ -99,7 +99,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add client/ && git commit -m "chore: initialize React TypeScript app with Vite, Tailwind, Vitest"
@@ -112,7 +112,7 @@ git add client/ && git commit -m "chore: initialize React TypeScript app with Vi
 **Files:**
 - Create: `client/src/types/index.ts`
 
-- [ ] **Step 1: Create type definitions**
+- [x] **Step 1: Create type definitions**
 
 Create `client/src/types/index.ts`:
 
@@ -200,7 +200,7 @@ export interface SessionSummary {
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add client/src/types/ && git commit -m "feat: add TypeScript type definitions for all API resources"
@@ -218,7 +218,7 @@ git add client/src/types/ && git commit -m "feat: add TypeScript type definition
 - Create: `client/src/api/progress.ts`
 - Create: `client/src/api/types.ts`
 
-- [ ] **Step 1: Create Axios base client**
+- [x] **Step 1: Create Axios base client**
 
 Create `client/src/api/client.ts`:
 
@@ -243,7 +243,7 @@ apiClient.interceptors.response.use(
 export default apiClient
 ```
 
-- [ ] **Step 2: Create API response helper types**
+- [x] **Step 2: Create API response helper types**
 
 Create `client/src/api/types.ts`:
 
@@ -292,7 +292,7 @@ export interface SessionResponse {
 }
 ```
 
-- [ ] **Step 3: Create exercises API**
+- [x] **Step 3: Create exercises API**
 
 Create `client/src/api/exercises.ts`:
 
@@ -350,7 +350,7 @@ export async function deleteExercise(id: number): Promise<void> {
 }
 ```
 
-- [ ] **Step 4: Create templates API**
+- [x] **Step 4: Create templates API**
 
 Create `client/src/api/templates.ts`:
 
@@ -404,7 +404,7 @@ export async function deleteTemplate(id: number): Promise<void> {
 }
 ```
 
-- [ ] **Step 5: Create sessions API**
+- [x] **Step 5: Create sessions API**
 
 Create `client/src/api/sessions.ts`:
 
@@ -475,7 +475,7 @@ export async function deleteLog(sessionId: number, seId: number, logId: number):
 }
 ```
 
-- [ ] **Step 6: Create progress API**
+- [x] **Step 6: Create progress API**
 
 Create `client/src/api/progress.ts`:
 
@@ -489,7 +489,7 @@ export async function getExerciseProgress(exerciseId: number): Promise<ExerciseP
 }
 ```
 
-- [ ] **Step 7: Verify build**
+- [x] **Step 7: Verify build**
 
 ```bash
 cd client && npm run build
@@ -497,7 +497,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add client/src/api/ client/src/types/ && git commit -m "feat: add TypeScript types and API client for all endpoints"
@@ -518,7 +518,7 @@ git add client/src/api/ client/src/types/ && git commit -m "feat: add TypeScript
 - Create: `client/src/hooks/useTemplates.ts`
 - Create: `client/src/hooks/useSessions.ts`
 
-- [ ] **Step 1: Set up React Router and QueryClient**
+- [x] **Step 1: Set up React Router and QueryClient**
 
 Replace `client/src/main.tsx`:
 
@@ -550,7 +550,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 ```
 
-- [ ] **Step 2: Set up App with routes**
+- [x] **Step 2: Set up App with routes**
 
 Replace `client/src/App.tsx`:
 
@@ -608,7 +608,7 @@ export default function App() {
 }
 ```
 
-- [ ] **Step 3: Create Navbar component**
+- [x] **Step 3: Create Navbar component**
 
 Create `client/src/components/Navbar.tsx`:
 
@@ -654,7 +654,7 @@ export default function Navbar() {
 }
 ```
 
-- [ ] **Step 4: Create shared UI components**
+- [x] **Step 4: Create shared UI components**
 
 Create `client/src/components/PageHeader.tsx`:
 
@@ -706,7 +706,7 @@ export default function ErrorMessage({ message }: ErrorMessageProps) {
 }
 ```
 
-- [ ] **Step 5: Create React Query hooks**
+- [x] **Step 5: Create React Query hooks**
 
 Create `client/src/hooks/useExercises.ts`:
 
@@ -929,7 +929,7 @@ export function useDeleteLog() {
 }
 ```
 
-- [ ] **Step 6: Verify build**
+- [x] **Step 6: Verify build**
 
 ```bash
 cd client && npm run build
@@ -937,7 +937,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add routing, Navbar, shared components, and React Query hooks"
@@ -947,7 +947,7 @@ git add client/src/ && git commit -m "feat: add routing, Navbar, shared componen
 
 ## Task 5: Verify Full Frontend Scaffolding
 
-- [ ] **Step 1: Build succeeds**
+- [x] **Step 1: Build succeeds**
 
 ```bash
 cd client && npm run build
@@ -955,7 +955,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 2: Dev server starts**
+- [x] **Step 2: Dev server starts**
 
 ```bash
 cd client && timeout 5 npm run dev || true
