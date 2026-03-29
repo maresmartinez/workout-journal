@@ -5,4 +5,6 @@ class Exercise < ApplicationRecord
   validates :exercise_type, presence: true
 
   has_many :exercise_metrics, dependent: :destroy
+
+  accepts_nested_attributes_for :exercise_metrics, allow_destroy: true
 end
