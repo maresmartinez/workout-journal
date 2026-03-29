@@ -5,9 +5,7 @@ import ExerciseLibrary from './pages/ExerciseLibrary'
 import ExerciseDetail from './pages/ExerciseDetail'
 import Templates from './pages/Templates'
 import TemplateDetail from './pages/TemplateDetail'
-function ActiveWorkout() {
-  return <div className="p-6"><h1 className="text-2xl font-bold">Active Workout</h1><p className="mt-2 text-gray-600">Coming soon</p></div>
-}
+import ActiveWorkout from './pages/ActiveWorkout'
 function History() {
   return <div className="p-6"><h1 className="text-2xl font-bold">History</h1><p className="mt-2 text-gray-600">Coming soon</p></div>
 }

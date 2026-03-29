@@ -38,7 +38,7 @@ function buildPrefilledValues(
 export default function SessionExerciseCard({
   sessionExercise,
   exercise,
-  sessionId,
+  sessionId: _sessionId,
   onCreateLog,
   onUpdateLog,
   onDeleteLog,
