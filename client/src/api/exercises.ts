@@ -1,6 +1,6 @@
 import apiClient from './client'
 import type { Exercise } from '../types'
-import type { ExercisesResponse, ExerciseResponse } from './types'
+import type { ExercisesResponse, ExerciseResponse, JsonApiRelationship } from './types'
 
 function extractExercise(data: ExerciseResponse): Exercise {
   const attrs = data.data.attributes
@@ -15,8 +15,11 @@ export async function getExercises(): Promise<Exercise[]> {
   const res = await apiClient.get<ExercisesResponse>('/exercises')
   return res.data.data.map((item) => {
     const attrs = item.attributes
+    const metricIds = new Set(
+      ((item.relationships?.exercise_metrics?.data as JsonApiRelationship[] | undefined) || []).map((r) => r.id)
+    )
     const metrics = (res.data.included || [])
-      .filter((inc) => String(inc.id) !== String(item.id) && inc.type === 'exercise_metric')
+      .filter((inc) => inc.type === 'exercise_metric' && metricIds.has(inc.id))
       .map((inc) => inc.attributes as Exercise['exercise_metrics'][0])
     return { ...attrs, id: Number(item.id), exercise_metrics: metrics }
   })

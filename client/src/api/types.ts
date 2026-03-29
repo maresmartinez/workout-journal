@@ -1,9 +1,21 @@
 import type { Exercise, WorkoutTemplate, WorkoutSession } from '../types'
 
+export interface JsonApiRelationship {
+  id: string
+  type: string
+}
+
+export interface JsonApiRelationships {
+  [key: string]: {
+    data?: JsonApiRelationship | JsonApiRelationship[]
+  }
+}
+
 export interface JsonApiData<T> {
   id: string
   type: string
   attributes: T
+  relationships?: JsonApiRelationships
 }
 
 export interface JsonApiResponse<T> {
