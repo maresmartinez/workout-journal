@@ -14,7 +14,7 @@
 - Create: `client/src/pages/Dashboard.tsx`
 - Modify: `client/src/App.tsx` (swap placeholder for real component)
 
-- [ ] **Step 1: Create Dashboard page**
+- [x] **Step 1: Create Dashboard page**
 
 Create `client/src/pages/Dashboard.tsx`:
 
@@ -122,7 +122,7 @@ export default function Dashboard() {
 }
 ```
 
-- [ ] **Step 2: Wire Dashboard into App router**
+- [x] **Step 2: Wire Dashboard into App router**
 
 In `client/src/App.tsx`, replace the `Dashboard` placeholder function with:
 
@@ -132,7 +132,7 @@ import Dashboard from './pages/Dashboard'
 
 And remove the old inline `function Dashboard() { ... }` definition.
 
-- [ ] **Step 3: Verify build**
+- [x] **Step 3: Verify build**
 
 ```bash
 cd client && npm run build
@@ -140,7 +140,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add Dashboard page with stats, recent activity, Start Workout CTA"
