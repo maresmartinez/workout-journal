@@ -14,7 +14,7 @@
 - Create: `client/src/pages/ExerciseLibrary.tsx`
 - Create: `client/src/components/ExerciseFormModal.tsx`
 
-- [ ] **Step 1: Create ExerciseFormModal component**
+- [x] **Step 1: Create ExerciseFormModal component**
 
 Create `client/src/components/ExerciseFormModal.tsx`:
 
@@ -157,7 +157,7 @@ export default function ExerciseFormModal({ open, onClose, onSubmit, isPending }
 }
 ```
 
-- [ ] **Step 2: Create ExerciseLibrary page**
+- [x] **Step 2: Create ExerciseLibrary page**
 
 Create `client/src/pages/ExerciseLibrary.tsx`:
 
@@ -266,7 +266,7 @@ export default function ExerciseLibrary() {
 }
 ```
 
-- [ ] **Step 3: Wire into App router**
+- [x] **Step 3: Wire into App router**
 
 In `client/src/App.tsx`, replace the `Exercises` placeholder with:
 
@@ -281,7 +281,7 @@ Update the route to:
 <Route path="/exercises" element={<ExerciseLibrary />} />
 ```
 
-- [ ] **Step 4: Verify build**
+- [x] **Step 4: Verify build**
 
 ```bash
 cd client && npm run build
@@ -289,7 +289,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add Exercise Library page with create modal"
@@ -302,7 +302,7 @@ git add client/src/ && git commit -m "feat: add Exercise Library page with creat
 **Files:**
 - Create: `client/src/pages/ExerciseDetail.tsx`
 
-- [ ] **Step 1: Create ExerciseDetail page**
+- [x] **Step 1: Create ExerciseDetail page**
 
 Create `client/src/pages/ExerciseDetail.tsx`:
 
@@ -385,7 +385,7 @@ export default function ExerciseDetail() {
 }
 ```
 
-- [ ] **Step 2: Wire into App router**
+- [x] **Step 2: Wire into App router**
 
 In `client/src/App.tsx`, replace the `ExerciseDetail` placeholder with:
 
@@ -395,7 +395,7 @@ import ExerciseDetail from './pages/ExerciseDetail'
 
 Remove the old inline `function ExerciseDetail() { ... }`.
 
-- [ ] **Step 3: Verify build**
+- [x] **Step 3: Verify build**
 
 ```bash
 cd client && npm run build
@@ -403,7 +403,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add Exercise Detail page with metrics table"
