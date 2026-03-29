@@ -12,7 +12,7 @@
 - Modify: `server/Gemfile`
 - Create: `server/config/initializers/cors.rb`
 
-- [ ] **Step 1: Add gems to Gemfile**
+- [x] **Step 1: Add gems to Gemfile**
 
 Add to `server/Gemfile`:
 
@@ -30,7 +30,7 @@ gem 'factory_bot_rails'
 cd server && bundle install
 ```
 
-- [ ] **Step 2: Add CORS initializer**
+- [x] **Step 2: Add CORS initializer**
 
 Create `server/config/initializers/cors.rb`:
 
@@ -56,7 +56,7 @@ gem 'rack-cors'
 cd server && bundle install
 ```
 
-- [ ] **Step 3: Configure FactoryBot in rails_helper**
+- [x] **Step 3: Configure FactoryBot in rails_helper**
 
 Add to `server/spec/rails_helper.rb` inside the `RSpec.configure` block:
 
@@ -64,7 +64,7 @@ Add to `server/spec/rails_helper.rb` inside the `RSpec.configure` block:
 config.include FactoryBot::Syntax::Methods
 ```
 
-- [ ] **Step 4: Create model factories**
+- [x] **Step 4: Create model factories**
 
 Create `server/spec/factories/exercises.rb`:
 
@@ -154,7 +154,7 @@ FactoryBot.define do
 end
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add server/ && git commit -m "chore: add jsonapi-serializer, rack-cors, factory_bot_rails"
@@ -170,7 +170,7 @@ git add server/ && git commit -m "chore: add jsonapi-serializer, rack-cors, fact
 - Create: `server/app/serializers/exercise_metric_serializer.rb`
 - Create: `server/spec/requests/api/v1/exercises_spec.rb`
 
-- [ ] **Step 1: Write failing request specs for Exercises**
+- [x] **Step 1: Write failing request specs for Exercises**
 
 Create `server/spec/requests/api/v1/exercises_spec.rb`:
 
@@ -283,7 +283,7 @@ RSpec.describe 'Api::V1::Exercises', type: :request do
 end
 ```
 
-- [ ] **Step 2: Run spec to verify it fails**
+- [x] **Step 2: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/exercises_spec.rb
@@ -291,7 +291,7 @@ cd server && bundle exec rspec spec/requests/api/v1/exercises_spec.rb
 
 Expected: FAIL — uninitialized constant
 
-- [ ] **Step 3: Create serializers**
+- [x] **Step 3: Create serializers**
 
 Create `server/app/serializers/exercise_metric_serializer.rb`:
 
@@ -315,7 +315,7 @@ class ExerciseSerializer
 end
 ```
 
-- [ ] **Step 4: Create Exercises controller**
+- [x] **Step 4: Create Exercises controller**
 
 Create `server/app/controllers/api/v1/exercises_controller.rb`:
 
@@ -384,7 +384,7 @@ Add `accepts_nested_attributes_for` to `server/app/models/exercise.rb`:
 accepts_nested_attributes_for :exercise_metrics, allow_destroy: true
 ```
 
-- [ ] **Step 5: Set up routes**
+- [x] **Step 5: Set up routes**
 
 Edit `server/config/routes.rb`:
 
@@ -426,7 +426,7 @@ Rails.application.routes.draw do
 end
 ```
 
-- [ ] **Step 6: Add ApplicationController base**
+- [x] **Step 6: Add ApplicationController base**
 
 Ensure `server/app/controllers/application_controller.rb` exists (it should from rails new). It just needs:
 
@@ -435,7 +435,7 @@ class ApplicationController < ActionController::API
 end
 ```
 
-- [ ] **Step 7: Run spec to verify it passes**
+- [x] **Step 7: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/exercises_spec.rb
@@ -443,7 +443,7 @@ cd server && bundle exec rspec spec/requests/api/v1/exercises_spec.rb
 
 Expected: all examples PASS
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add server/ && git commit -m "feat: add Exercises API with nested metrics, serializers, request specs"
@@ -459,7 +459,7 @@ git add server/ && git commit -m "feat: add Exercises API with nested metrics, s
 - Create: `server/app/serializers/workout_template_exercise_serializer.rb`
 - Create: `server/spec/requests/api/v1/workout_templates_spec.rb`
 
-- [ ] **Step 1: Write failing request specs for Workout Templates**
+- [x] **Step 1: Write failing request specs for Workout Templates**
 
 Create `server/spec/requests/api/v1/workout_templates_spec.rb`:
 
@@ -541,7 +541,7 @@ RSpec.describe 'Api::V1::WorkoutTemplates', type: :request do
 end
 ```
 
-- [ ] **Step 2: Run spec to verify it fails**
+- [x] **Step 2: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/workout_templates_spec.rb
@@ -549,7 +549,7 @@ cd server && bundle exec rspec spec/requests/api/v1/workout_templates_spec.rb
 
 Expected: FAIL
 
-- [ ] **Step 3: Create serializers**
+- [x] **Step 3: Create serializers**
 
 Create `server/app/serializers/workout_template_exercise_serializer.rb`:
 
@@ -575,7 +575,7 @@ class WorkoutTemplateSerializer
 end
 ```
 
-- [ ] **Step 4: Create controller**
+- [x] **Step 4: Create controller**
 
 Create `server/app/controllers/api/v1/workout_templates_controller.rb`:
 
@@ -635,7 +635,7 @@ Add `accepts_nested_attributes_for` to `server/app/models/workout_template.rb`:
 accepts_nested_attributes_for :workout_template_exercises, allow_destroy: true
 ```
 
-- [ ] **Step 5: Run spec to verify it passes**
+- [x] **Step 5: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/workout_templates_spec.rb
@@ -643,7 +643,7 @@ cd server && bundle exec rspec spec/requests/api/v1/workout_templates_spec.rb
 
 Expected: all examples PASS
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add server/ && git commit -m "feat: add Workout Templates API with nested exercises, serializers, request specs"
@@ -664,7 +664,7 @@ git add server/ && git commit -m "feat: add Workout Templates API with nested ex
 - Create: `server/spec/requests/api/v1/session_exercises_spec.rb`
 - Create: `server/spec/requests/api/v1/session_exercise_logs_spec.rb`
 
-- [ ] **Step 1: Write failing request specs for Workout Sessions**
+- [x] **Step 1: Write failing request specs for Workout Sessions**
 
 Create `server/spec/requests/api/v1/workout_sessions_spec.rb`:
 
@@ -756,7 +756,7 @@ RSpec.describe 'Api::V1::WorkoutSessions', type: :request do
 end
 ```
 
-- [ ] **Step 2: Run spec to verify it fails**
+- [x] **Step 2: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/workout_sessions_spec.rb
@@ -764,7 +764,7 @@ cd server && bundle exec rspec spec/requests/api/v1/workout_sessions_spec.rb
 
 Expected: FAIL
 
-- [ ] **Step 3: Create serializers**
+- [x] **Step 3: Create serializers**
 
 Create `server/app/serializers/session_exercise_log_serializer.rb`:
 
@@ -801,7 +801,7 @@ class WorkoutSessionSerializer
 end
 ```
 
-- [ ] **Step 4: Create WorkoutSessions controller**
+- [x] **Step 4: Create WorkoutSessions controller**
 
 Create `server/app/controllers/api/v1/workout_sessions_controller.rb`:
 
@@ -867,7 +867,7 @@ class Api::V1::WorkoutSessionsController < ApplicationController
 end
 ```
 
-- [ ] **Step 5: Run spec to verify it passes**
+- [x] **Step 5: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/workout_sessions_spec.rb
@@ -875,7 +875,7 @@ cd server && bundle exec rspec spec/requests/api/v1/workout_sessions_spec.rb
 
 Expected: all examples PASS
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add server/ && git commit -m "feat: add Workout Sessions API with summary endpoint"
@@ -891,7 +891,7 @@ git add server/ && git commit -m "feat: add Workout Sessions API with summary en
 - Create: `server/spec/requests/api/v1/session_exercises_spec.rb`
 - Create: `server/spec/requests/api/v1/session_exercise_logs_spec.rb`
 
-- [ ] **Step 1: Write failing request specs for Session Exercises**
+- [x] **Step 1: Write failing request specs for Session Exercises**
 
 Create `server/spec/requests/api/v1/session_exercises_spec.rb`:
 
@@ -940,7 +940,7 @@ RSpec.describe 'Api::V1::SessionExercises', type: :request do
 end
 ```
 
-- [ ] **Step 2: Write failing request specs for Session Exercise Logs**
+- [x] **Step 2: Write failing request specs for Session Exercise Logs**
 
 Create `server/spec/requests/api/v1/session_exercise_logs_spec.rb`:
 
@@ -991,7 +991,7 @@ RSpec.describe 'Api::V1::SessionExerciseLogs', type: :request do
 end
 ```
 
-- [ ] **Step 3: Run specs to verify they fail**
+- [x] **Step 3: Run specs to verify they fail**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/session_exercises_spec.rb spec/requests/api/v1/session_exercise_logs_spec.rb
@@ -999,7 +999,7 @@ cd server && bundle exec rspec spec/requests/api/v1/session_exercises_spec.rb sp
 
 Expected: FAIL
 
-- [ ] **Step 4: Create SessionExercises controller**
+- [x] **Step 4: Create SessionExercises controller**
 
 Create `server/app/controllers/api/v1/session_exercises_controller.rb`:
 
@@ -1051,7 +1051,7 @@ class Api::V1::SessionExercisesController < ApplicationController
 end
 ```
 
-- [ ] **Step 5: Create SessionExerciseLogs controller**
+- [x] **Step 5: Create SessionExerciseLogs controller**
 
 Create `server/app/controllers/api/v1/session_exercise_logs_controller.rb`:
 
@@ -1110,7 +1110,7 @@ class Api::V1::SessionExerciseLogsController < ApplicationController
 end
 ```
 
-- [ ] **Step 6: Run specs to verify they pass**
+- [x] **Step 6: Run specs to verify they pass**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/session_exercises_spec.rb spec/requests/api/v1/session_exercise_logs_spec.rb
@@ -1118,7 +1118,7 @@ cd server && bundle exec rspec spec/requests/api/v1/session_exercises_spec.rb sp
 
 Expected: all examples PASS
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add server/ && git commit -m "feat: add Session Exercises and Session Exercise Logs APIs"
@@ -1132,7 +1132,7 @@ git add server/ && git commit -m "feat: add Session Exercises and Session Exerci
 - Create: `server/app/controllers/api/v1/progress_controller.rb`
 - Create: `server/spec/requests/api/v1/progress_spec.rb`
 
-- [ ] **Step 1: Write failing request specs for Progress**
+- [x] **Step 1: Write failing request specs for Progress**
 
 Create `server/spec/requests/api/v1/progress_spec.rb`:
 
@@ -1162,7 +1162,7 @@ RSpec.describe 'Api::V1::Progress', type: :request do
 end
 ```
 
-- [ ] **Step 2: Run spec to verify it fails**
+- [x] **Step 2: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/progress_spec.rb
@@ -1170,7 +1170,7 @@ cd server && bundle exec rspec spec/requests/api/v1/progress_spec.rb
 
 Expected: FAIL
 
-- [ ] **Step 3: Create Progress controller**
+- [x] **Step 3: Create Progress controller**
 
 Create `server/app/controllers/api/v1/progress_controller.rb`:
 
@@ -1202,7 +1202,7 @@ class Api::V1::ProgressController < ApplicationController
 end
 ```
 
-- [ ] **Step 4: Run spec to verify it passes**
+- [x] **Step 4: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/requests/api/v1/progress_spec.rb
@@ -1210,7 +1210,7 @@ cd server && bundle exec rspec spec/requests/api/v1/progress_spec.rb
 
 Expected: PASS
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add server/ && git commit -m "feat: add Progress API with exercise time-series endpoint"
@@ -1220,7 +1220,7 @@ git add server/ && git commit -m "feat: add Progress API with exercise time-seri
 
 ## Task 7: Full Backend Spec Suite
 
-- [ ] **Step 1: Run all specs**
+- [x] **Step 1: Run all specs**
 
 ```bash
 cd server && bundle exec rspec
@@ -1228,7 +1228,7 @@ cd server && bundle exec rspec
 
 Expected: all examples PASS, 0 failures
 
-- [ ] **Step 2: Verify all routes exist**
+- [x] **Step 2: Verify all routes exist**
 
 ```bash
 cd server && rails routes | grep api/v1
