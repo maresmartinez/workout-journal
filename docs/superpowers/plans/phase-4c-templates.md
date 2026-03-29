@@ -14,7 +14,7 @@
 - Create: `client/src/pages/Templates.tsx`
 - Create: `client/src/components/TemplateFormModal.tsx`
 
-- [ ] **Step 1: Create TemplateFormModal component**
+- [x] **Step 1: Create TemplateFormModal component**
 
 Create `client/src/components/TemplateFormModal.tsx`:
 
@@ -142,7 +142,7 @@ export default function TemplateFormModal({ open, onClose, exercises, onSubmit, 
 }
 ```
 
-- [ ] **Step 2: Create Templates list page**
+- [x] **Step 2: Create Templates list page**
 
 Create `client/src/pages/Templates.tsx`:
 
@@ -222,7 +222,7 @@ export default function Templates() {
 }
 ```
 
-- [ ] **Step 3: Wire into App router**
+- [x] **Step 3: Wire into App router**
 
 In `client/src/App.tsx`, replace the `Templates` placeholder with:
 
@@ -232,7 +232,7 @@ import Templates from './pages/Templates'
 
 Remove old inline `function Templates() { ... }`.
 
-- [ ] **Step 4: Verify build**
+- [x] **Step 4: Verify build**
 
 ```bash
 cd client && npm run build
@@ -240,7 +240,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add Templates list page with create modal"
@@ -253,7 +253,7 @@ git add client/src/ && git commit -m "feat: add Templates list page with create 
 **Files:**
 - Create: `client/src/pages/TemplateDetail.tsx`
 
-- [ ] **Step 1: Create TemplateDetail page**
+- [x] **Step 1: Create TemplateDetail page**
 
 Create `client/src/pages/TemplateDetail.tsx`:
 
@@ -334,7 +334,7 @@ export default function TemplateDetail() {
 }
 ```
 
-- [ ] **Step 2: Wire into App router**
+- [x] **Step 2: Wire into App router**
 
 In `client/src/App.tsx`, replace the `TemplateDetail` placeholder with:
 
@@ -344,7 +344,7 @@ import TemplateDetail from './pages/TemplateDetail'
 
 Remove old inline `function TemplateDetail() { ... }`.
 
-- [ ] **Step 3: Verify build**
+- [x] **Step 3: Verify build**
 
 ```bash
 cd client && npm run build
@@ -352,7 +352,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add Template Detail page with Start Workout button"
