@@ -4,9 +4,7 @@ import Dashboard from './pages/Dashboard'
 import ExerciseLibrary from './pages/ExerciseLibrary'
 import ExerciseDetail from './pages/ExerciseDetail'
 import Templates from './pages/Templates'
-function TemplateDetail() {
-  return <div className="p-6"><h1 className="text-2xl font-bold">Template Detail</h1><p className="mt-2 text-gray-600">Coming soon</p></div>
-}
+import TemplateDetail from './pages/TemplateDetail'
 function ActiveWorkout() {
   return <div className="p-6"><h1 className="text-2xl font-bold">Active Workout</h1><p className="mt-2 text-gray-600">Coming soon</p></div>
 }
