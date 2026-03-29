@@ -1,0 +1,58 @@
+class Api::V1::WorkoutSessionsController < ApplicationController
+  before_action :set_session, only: [ :show, :update, :destroy ]
+
+  def index
+    sessions = WorkoutSession.order(started_at: :desc).limit(50)
+    render json: WorkoutSessionSerializer.new(sessions).serializable_hash.to_json
+  end
+
+  def summary
+    total_sessions = WorkoutSession.count
+    completed_sessions = WorkoutSession.where(status: :completed).count
+
+    render json: {
+      total_sessions: total_sessions,
+      completed_sessions: completed_sessions
+    }
+  end
+
+  def show
+    render json: WorkoutSessionSerializer.new(@session, include: [ :session_exercises, :'session_exercises.exercise', :'session_exercises.session_exercise_logs' ]).serializable_hash.to_json
+  end
+
+  def create
+    session = WorkoutSession.new(session_params)
+    session.status = :in_progress
+
+    if session.save
+      render json: WorkoutSessionSerializer.new(session).serializable_hash.to_json, status: :created
+    else
+      render json: { errors: session.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @session.update(session_params)
+      render json: WorkoutSessionSerializer.new(@session, include: [ :session_exercises ]).serializable_hash.to_json
+    else
+      render json: { errors: @session.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @session.destroy
+    head :no_content
+  end
+
+  private
+
+  def set_session
+    @session = WorkoutSession.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Workout session not found" }, status: :not_found
+  end
+
+  def session_params
+    params.require(:workout_session).permit(:name, :started_at, :ended_at, :status)
+  end
+end
