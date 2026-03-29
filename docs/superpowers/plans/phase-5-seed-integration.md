@@ -13,7 +13,7 @@
 **Files:**
 - Create: `server/db/seeds.rb`
 
-- [ ] **Step 1: Write seed file**
+- [x] **Step 1: Write seed file**
 
 Replace `server/db/seeds.rb`:
 
@@ -95,7 +95,7 @@ end
 puts "\nSeeded #{Exercise.count} built-in exercises."
 ```
 
-- [ ] **Step 2: Run seeds**
+- [x] **Step 2: Run seeds**
 
 ```bash
 cd server && rails db:seed
@@ -103,7 +103,7 @@ cd server && rails db:seed
 
 Expected: outputs creation of 11 exercises with metrics
 
-- [ ] **Step 3: Verify seed data via API**
+- [x] **Step 3: Verify seed data via API**
 
 ```bash
 cd server && rails runner 'puts Exercise.includes(:exercise_metrics).map { |e| "#{e.name}: #{e.exercise_metrics.map(&:name).join(", ")}" }.join("\n")'
@@ -111,7 +111,7 @@ cd server && rails runner 'puts Exercise.includes(:exercise_metrics).map { |e| "
 
 Expected: lists all 11 exercises with their metrics
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add server/db/seeds.rb && git commit -m "feat: add built-in exercise seed data (strength, cardio, bodyweight)"
@@ -127,19 +127,19 @@ git add server/db/seeds.rb && git commit -m "feat: add built-in exercise seed da
 
 > **Note:** In development, Vite's dev server proxies API calls to Rails. In production, you'd configure Rails to serve the built SPA. This task adds a basic fallback.
 
-- [ ] **Step 1: Add catch-all route for SPA**
+- [x] **Step 1: Add catch-all route for SPA**
 
 This is optional for dev but useful for production. Skip if you'll deploy them separately.
 
 No action needed for development — Vite dev server handles the frontend and proxies `/api` to Rails.
 
-- [ ] **Step 2: Commit if changes made** (skip if no changes)
+- [x] **Step 2: Commit if changes made** (skip if no changes)
 
 ---
 
 ## Task 3: Final Full-Stack Smoke Test
 
-- [ ] **Step 1: Run backend specs**
+- [x] **Step 1: Run backend specs**
 
 ```bash
 cd server && bundle exec rspec
@@ -147,7 +147,7 @@ cd server && bundle exec rspec
 
 Expected: all examples PASS, 0 failures
 
-- [ ] **Step 2: Run frontend build**
+- [x] **Step 2: Run frontend build**
 
 ```bash
 cd client && npm run build
@@ -155,13 +155,13 @@ cd client && npm run build
 
 Expected: builds successfully, no errors
 
-- [ ] **Step 3: Start Rails server**
+- [x] **Step 3: Start Rails server**
 
 ```bash
 cd server && rails server -p 3000 &
 ```
 
-- [ ] **Step 4: Verify API responds**
+- [x] **Step 4: Verify API responds**
 
 ```bash
 curl -s http://localhost:3000/api/v1/exercises | head -c 200
@@ -169,13 +169,13 @@ curl -s http://localhost:3000/api/v1/exercises | head -c 200
 
 Expected: JSON response with exercise data
 
-- [ ] **Step 5: Start Vite dev server**
+- [x] **Step 5: Start Vite dev server**
 
 ```bash
 cd client && npm run dev &
 ```
 
-- [ ] **Step 6: Open browser**
+- [x] **Step 6: Open browser**
 
 Open `http://localhost:5173` and verify:
 - Navbar renders with all links
@@ -185,13 +185,13 @@ Open `http://localhost:5173` and verify:
 - History page renders
 - Progress page renders
 
-- [ ] **Step 7: Kill background servers**
+- [x] **Step 7: Kill background servers**
 
 ```bash
 kill %1 %2 2>/dev/null; true
 ```
 
-- [ ] **Step 8: Final commit (if any remaining changes)**
+- [x] **Step 8: Final commit (if any remaining changes)**
 
 ```bash
 git add -A && git status
@@ -206,7 +206,7 @@ Only commit if there are uncommitted changes.
 **Files:**
 - Modify: `client/src/App.tsx`
 
-- [ ] **Step 1: Remove all remaining placeholder components from App.tsx**
+- [x] **Step 1: Remove all remaining placeholder components from App.tsx**
 
 After all page imports are in place, `client/src/App.tsx` should contain only imports and routes — no inline placeholder functions. Verify the file looks clean:
 
@@ -245,7 +245,7 @@ export default function App() {
 }
 ```
 
-- [ ] **Step 2: Final build check**
+- [x] **Step 2: Final build check**
 
 ```bash
 cd client && npm run build
@@ -253,7 +253,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add client/src/App.tsx && git commit -m "refactor: remove inline placeholders, use imported page components"
