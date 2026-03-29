@@ -14,7 +14,7 @@
 - Create: `client/src/pages/Progress.tsx`
 - Create: `client/src/hooks/useProgress.ts`
 
-- [ ] **Step 1: Create useProgress hook**
+- [x] **Step 1: Create useProgress hook**
 
 Create `client/src/hooks/useProgress.ts`:
 
@@ -31,7 +31,7 @@ export function useExerciseProgress(exerciseId: number) {
 }
 ```
 
-- [ ] **Step 2: Create Progress page**
+- [x] **Step 2: Create Progress page**
 
 Create `client/src/pages/Progress.tsx`:
 
@@ -133,7 +133,7 @@ export default function Progress() {
 }
 ```
 
-- [ ] **Step 3: Wire into App router**
+- [x] **Step 3: Wire into App router**
 
 In `client/src/App.tsx`, replace the `Progress` placeholder with:
 
@@ -143,7 +143,7 @@ import Progress from './pages/Progress'
 
 Remove old inline `function Progress() { ... }`.
 
-- [ ] **Step 4: Verify build**
+- [x] **Step 4: Verify build**
 
 ```bash
 cd client && npm run build
@@ -151,7 +151,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add Progress page with Recharts line charts per metric"
