@@ -22,7 +22,7 @@ This plan is broken into phases. Execute in order — each phase depends on the 
 | 4a | [phase-4a-dashboard.md](phase-4a-dashboard.md) | ~~Dashboard page — quick stats, recent activity, Start Workout CTA~~ **DONE** |
 | 4b | [phase-4b-exercises.md](phase-4b-exercises.md) | ~~Exercise Library + Exercise Detail pages~~ **DONE** |
 | 4c | [phase-4c-templates.md](phase-4c-templates.md) | ~~Workout Templates + Template Detail pages~~ **DONE** |
-| 4d | [phase-4d-active-workout.md](phase-4d-active-workout.md) | Active Workout session page — core live-logging experience |
+| 4d | [phase-4d-active-workout.md](phase-4d-active-workout.md) | ~~Active Workout session page — core live-logging experience~~ **DONE** |
 | 4e | [phase-4e-history.md](phase-4e-history.md) | History list + Session Detail pages |
 | 4f | [phase-4f-progress.md](phase-4f-progress.md) | Progress charts page with Recharts |
 | 5 | [phase-5-seed-integration.md](phase-5-seed-integration.md) | Built-in exercise seed data, end-to-end integration, final polish |

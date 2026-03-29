@@ -15,7 +15,7 @@
 **Files:**
 - Create: `client/src/components/ExercisePickerModal.tsx`
 
-- [ ] **Step 1: Create ExercisePickerModal**
+- [x] **Step 1: Create ExercisePickerModal**
 
 This modal lets users pick an exercise to add to the active session.
 
@@ -88,7 +88,7 @@ export default function ExercisePickerModal({ open, onClose, exercises, onSelect
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add client/src/components/ExercisePickerModal.tsx && git commit -m "feat: add ExercisePickerModal for adding exercises to session"
@@ -101,7 +101,7 @@ git add client/src/components/ExercisePickerModal.tsx && git commit -m "feat: ad
 **Files:**
 - Create: `client/src/components/SessionExerciseCard.tsx`
 
-- [ ] **Step 1: Create SessionExerciseCard**
+- [x] **Step 1: Create SessionExerciseCard**
 
 This renders one exercise within the active workout — showing logged entries and an "Add Set" button.
 
@@ -305,7 +305,7 @@ export default function SessionExerciseCard({
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add client/src/components/SessionExerciseCard.tsx && git commit -m "feat: add SessionExerciseCard component for logging sets"
@@ -319,7 +319,7 @@ git add client/src/components/SessionExerciseCard.tsx && git commit -m "feat: ad
 - Create: `client/src/pages/ActiveWorkout.tsx`
 - Create: `client/src/hooks/useTimer.ts`
 
-- [ ] **Step 1: Create useTimer hook**
+- [x] **Step 1: Create useTimer hook**
 
 Create `client/src/hooks/useTimer.ts`:
 
@@ -357,7 +357,7 @@ export function useTimer(startedAt: string | undefined) {
 }
 ```
 
-- [ ] **Step 2: Create ActiveWorkout page**
+- [x] **Step 2: Create ActiveWorkout page**
 
 Create `client/src/pages/ActiveWorkout.tsx`:
 
@@ -508,7 +508,7 @@ export default function ActiveWorkout() {
 }
 ```
 
-- [ ] **Step 3: Wire into App router**
+- [x] **Step 3: Wire into App router**
 
 In `client/src/App.tsx`, replace the `ActiveWorkout` placeholder with:
 
@@ -518,7 +518,7 @@ import ActiveWorkout from './pages/ActiveWorkout'
 
 Remove old inline `function ActiveWorkout() { ... }`.
 
-- [ ] **Step 4: Verify build**
+- [x] **Step 4: Verify build**
 
 ```bash
 cd client && npm run build
@@ -526,7 +526,7 @@ cd client && npm run build
 
 Expected: builds successfully
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add client/src/ && git commit -m "feat: add Active Workout page with timer, logging, exercise management"
