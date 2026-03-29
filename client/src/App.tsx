@@ -7,9 +7,7 @@ import Templates from './pages/Templates'
 import TemplateDetail from './pages/TemplateDetail'
 import ActiveWorkout from './pages/ActiveWorkout'
 import History from './pages/History'
-function SessionDetail() {
-  return <div className="p-6"><h1 className="text-2xl font-bold">Session Detail</h1><p className="mt-2 text-gray-600">Coming soon</p></div>
-}
+import SessionDetail from './pages/SessionDetail'
 function Progress() {
   return <div className="p-6"><h1 className="text-2xl font-bold">Progress</h1><p className="mt-2 text-gray-600">Coming soon</p></div>
 }
