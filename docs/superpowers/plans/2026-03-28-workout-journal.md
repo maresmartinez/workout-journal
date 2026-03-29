@@ -16,7 +16,7 @@ This plan is broken into phases. Execute in order — each phase depends on the 
 
 | Phase | File | Description |
 |-------|------|-------------|
-| 1 | [phase-1-rails-scaffolding.md](phase-1-rails-scaffolding.md) | Rails app init, models, migrations, associations, validations |
+| 1 | [phase-1-rails-scaffolding.md](phase-1-rails-scaffolding.md) | ~~Rails app init, models, migrations, associations, validations~~ **DONE** |
 | 2 | [phase-2-rails-api.md](phase-2-rails-api.md) | Controllers, serializers, API endpoints, request specs |
 | 3 | [phase-3-frontend-scaffolding.md](phase-3-frontend-scaffolding.md) | React app init, routing, shared components, API client, types |
 | 4a | [phase-4a-dashboard.md](phase-4a-dashboard.md) | Dashboard page — quick stats, recent activity, Start Workout CTA |

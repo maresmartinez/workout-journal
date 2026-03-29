@@ -11,13 +11,13 @@
 **Files:**
 - Create: `server/` (entire Rails app skeleton)
 
-- [ ] **Step 1: Create the Rails API app**
+- [x] **Step 1: Create the Rails API app**
 
 ```bash
 rails new server --api --database=postgresql --skip-test --skip-javascript
 ```
 
-- [ ] **Step 2: Add RSpec to Gemfile**
+- [x] **Step 2: Add RSpec to Gemfile**
 
 Add to `server/Gemfile` in the `:development, :test` group:
 
@@ -25,13 +25,13 @@ Add to `server/Gemfile` in the `:development, :test` group:
 gem 'rspec-rails', '~> 6.0'
 ```
 
-- [ ] **Step 3: Install and setup RSpec**
+- [x] **Step 3: Install and setup RSpec**
 
 ```bash
 cd server && bundle install && rails generate rspec:install
 ```
 
-- [ ] **Step 4: Verify Rails app boots**
+- [x] **Step 4: Verify Rails app boots**
 
 ```bash
 cd server && rails db:create && rails runner 'puts "OK"'
@@ -39,7 +39,7 @@ cd server && rails db:create && rails runner 'puts "OK"'
 
 Expected: `OK`
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add server/ && git commit -m "chore: initialize Rails 7 API-only app with PostgreSQL and RSpec"
@@ -57,7 +57,7 @@ git add server/ && git commit -m "chore: initialize Rails 7 API-only app with Po
 - Create: `server/spec/models/exercise_spec.rb`
 - Create: `server/spec/models/exercise_metric_spec.rb`
 
-- [ ] **Step 1: Write failing Exercise model spec**
+- [x] **Step 1: Write failing Exercise model spec**
 
 Create `server/spec/models/exercise_spec.rb`:
 
@@ -110,7 +110,7 @@ RSpec.describe Exercise, type: :model do
 end
 ```
 
-- [ ] **Step 2: Run spec to verify it fails**
+- [x] **Step 2: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/models/exercise_spec.rb
@@ -118,7 +118,7 @@ cd server && bundle exec rspec spec/models/exercise_spec.rb
 
 Expected: FAIL — uninitialized constant `Exercise`
 
-- [ ] **Step 3: Generate Exercise model and run migration**
+- [x] **Step 3: Generate Exercise model and run migration**
 
 ```bash
 cd server && rails generate model Exercise name:string description:text exercise_type:integer user:references
@@ -158,7 +158,7 @@ class Exercise < ApplicationRecord
 end
 ```
 
-- [ ] **Step 4: Run spec to verify it passes**
+- [x] **Step 4: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/models/exercise_spec.rb
@@ -166,7 +166,7 @@ cd server && bundle exec rspec spec/models/exercise_spec.rb
 
 Expected: all examples PASS
 
-- [ ] **Step 5: Write failing ExerciseMetric model spec**
+- [x] **Step 5: Write failing ExerciseMetric model spec**
 
 Create `server/spec/models/exercise_metric_spec.rb`:
 
@@ -228,7 +228,7 @@ RSpec.describe ExerciseMetric, type: :model do
 end
 ```
 
-- [ ] **Step 6: Run spec to verify it fails**
+- [x] **Step 6: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/models/exercise_metric_spec.rb
@@ -236,7 +236,7 @@ cd server && bundle exec rspec spec/models/exercise_metric_spec.rb
 
 Expected: FAIL — uninitialized constant `ExerciseMetric`
 
-- [ ] **Step 7: Generate ExerciseMetric model and run migration**
+- [x] **Step 7: Generate ExerciseMetric model and run migration**
 
 ```bash
 cd server && rails generate model ExerciseMetric exercise:references name:string metric_type:integer unit:string required:boolean
@@ -277,7 +277,7 @@ class ExerciseMetric < ApplicationRecord
 end
 ```
 
-- [ ] **Step 8: Run spec to verify it passes**
+- [x] **Step 8: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/models/exercise_metric_spec.rb
@@ -285,7 +285,7 @@ cd server && bundle exec rspec spec/models/exercise_metric_spec.rb
 
 Expected: all examples PASS
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add server/ && git commit -m "feat: add Exercise and ExerciseMetric models with validations"
@@ -301,7 +301,7 @@ git add server/ && git commit -m "feat: add Exercise and ExerciseMetric models w
 - Create: `server/spec/models/workout_template_spec.rb`
 - Create: `server/spec/models/workout_template_exercise_spec.rb`
 
-- [ ] **Step 1: Write failing WorkoutTemplate model spec**
+- [x] **Step 1: Write failing WorkoutTemplate model spec**
 
 Create `server/spec/models/workout_template_spec.rb`:
 
@@ -334,7 +334,7 @@ RSpec.describe WorkoutTemplate, type: :model do
 end
 ```
 
-- [ ] **Step 2: Run spec to verify it fails**
+- [x] **Step 2: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/models/workout_template_spec.rb
@@ -342,7 +342,7 @@ cd server && bundle exec rspec spec/models/workout_template_spec.rb
 
 Expected: FAIL
 
-- [ ] **Step 3: Generate WorkoutTemplate model and implement**
+- [x] **Step 3: Generate WorkoutTemplate model and implement**
 
 ```bash
 cd server && rails generate model WorkoutTemplate name:string description:text user:references
@@ -378,7 +378,7 @@ class WorkoutTemplate < ApplicationRecord
 end
 ```
 
-- [ ] **Step 4: Run spec to verify it passes**
+- [x] **Step 4: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/models/workout_template_spec.rb
@@ -386,7 +386,7 @@ cd server && bundle exec rspec spec/models/workout_template_spec.rb
 
 Expected: PASS
 
-- [ ] **Step 5: Write failing WorkoutTemplateExercise model spec**
+- [x] **Step 5: Write failing WorkoutTemplateExercise model spec**
 
 Create `server/spec/models/workout_template_exercise_spec.rb`:
 
@@ -427,7 +427,7 @@ RSpec.describe WorkoutTemplateExercise, type: :model do
 end
 ```
 
-- [ ] **Step 6: Run spec to verify it fails**
+- [x] **Step 6: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/models/workout_template_exercise_spec.rb
@@ -435,7 +435,7 @@ cd server && bundle exec rspec spec/models/workout_template_exercise_spec.rb
 
 Expected: FAIL
 
-- [ ] **Step 7: Generate WorkoutTemplateExercise model and implement**
+- [x] **Step 7: Generate WorkoutTemplateExercise model and implement**
 
 ```bash
 cd server && rails generate model WorkoutTemplateExercise workout_template:references exercise:references position:integer notes:text
@@ -473,7 +473,7 @@ class WorkoutTemplateExercise < ApplicationRecord
 end
 ```
 
-- [ ] **Step 8: Run spec to verify it passes**
+- [x] **Step 8: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/models/workout_template_exercise_spec.rb
@@ -481,7 +481,7 @@ cd server && bundle exec rspec spec/models/workout_template_exercise_spec.rb
 
 Expected: PASS
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add server/ && git commit -m "feat: add WorkoutTemplate and WorkoutTemplateExercise models"
@@ -499,7 +499,7 @@ git add server/ && git commit -m "feat: add WorkoutTemplate and WorkoutTemplateE
 - Create: `server/spec/models/session_exercise_spec.rb`
 - Create: `server/spec/models/session_exercise_log_spec.rb`
 
-- [ ] **Step 1: Write failing WorkoutSession model spec**
+- [x] **Step 1: Write failing WorkoutSession model spec**
 
 Create `server/spec/models/workout_session_spec.rb`:
 
@@ -551,7 +551,7 @@ RSpec.describe WorkoutSession, type: :model do
 end
 ```
 
-- [ ] **Step 2: Run spec to verify it fails**
+- [x] **Step 2: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/models/workout_session_spec.rb
@@ -559,7 +559,7 @@ cd server && bundle exec rspec spec/models/workout_session_spec.rb
 
 Expected: FAIL
 
-- [ ] **Step 3: Generate WorkoutSession model and implement**
+- [x] **Step 3: Generate WorkoutSession model and implement**
 
 ```bash
 cd server && rails generate model WorkoutSession name:string started_at:datetime ended_at:datetime status:integer user:references
@@ -599,7 +599,7 @@ class WorkoutSession < ApplicationRecord
 end
 ```
 
-- [ ] **Step 4: Run spec to verify it passes**
+- [x] **Step 4: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/models/workout_session_spec.rb
@@ -607,7 +607,7 @@ cd server && bundle exec rspec spec/models/workout_session_spec.rb
 
 Expected: PASS
 
-- [ ] **Step 5: Write failing SessionExercise model spec**
+- [x] **Step 5: Write failing SessionExercise model spec**
 
 Create `server/spec/models/session_exercise_spec.rb`:
 
@@ -649,7 +649,7 @@ RSpec.describe SessionExercise, type: :model do
 end
 ```
 
-- [ ] **Step 6: Run spec to verify it fails**
+- [x] **Step 6: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/models/session_exercise_spec.rb
@@ -657,7 +657,7 @@ cd server && bundle exec rspec spec/models/session_exercise_spec.rb
 
 Expected: FAIL
 
-- [ ] **Step 7: Generate SessionExercise model and implement**
+- [x] **Step 7: Generate SessionExercise model and implement**
 
 ```bash
 cd server && rails generate model SessionExercise workout_session:references exercise:references position:integer notes:text
@@ -697,7 +697,7 @@ class SessionExercise < ApplicationRecord
 end
 ```
 
-- [ ] **Step 8: Run spec to verify it passes**
+- [x] **Step 8: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/models/session_exercise_spec.rb
@@ -705,7 +705,7 @@ cd server && bundle exec rspec spec/models/session_exercise_spec.rb
 
 Expected: PASS
 
-- [ ] **Step 9: Write failing SessionExerciseLog model spec**
+- [x] **Step 9: Write failing SessionExerciseLog model spec**
 
 Create `server/spec/models/session_exercise_log_spec.rb`:
 
@@ -743,7 +743,7 @@ RSpec.describe SessionExerciseLog, type: :model do
 end
 ```
 
-- [ ] **Step 10: Run spec to verify it fails**
+- [x] **Step 10: Run spec to verify it fails**
 
 ```bash
 cd server && bundle exec rspec spec/models/session_exercise_log_spec.rb
@@ -751,7 +751,7 @@ cd server && bundle exec rspec spec/models/session_exercise_log_spec.rb
 
 Expected: FAIL
 
-- [ ] **Step 11: Generate SessionExerciseLog model and implement**
+- [x] **Step 11: Generate SessionExerciseLog model and implement**
 
 ```bash
 cd server && rails generate model SessionExerciseLog session_exercise:references values:jsonb notes:text
@@ -787,7 +787,7 @@ class SessionExerciseLog < ApplicationRecord
 end
 ```
 
-- [ ] **Step 12: Run spec to verify it passes**
+- [x] **Step 12: Run spec to verify it passes**
 
 ```bash
 cd server && bundle exec rspec spec/models/session_exercise_log_spec.rb
@@ -795,7 +795,7 @@ cd server && bundle exec rspec spec/models/session_exercise_log_spec.rb
 
 Expected: PASS
 
-- [ ] **Step 13: Commit**
+- [x] **Step 13: Commit**
 
 ```bash
 git add server/ && git commit -m "feat: add WorkoutSession, SessionExercise, and SessionExerciseLog models"
@@ -805,7 +805,7 @@ git add server/ && git commit -m "feat: add WorkoutSession, SessionExercise, and
 
 ## Task 5: Run Full Model Spec Suite
 
-- [ ] **Step 1: Run all model specs**
+- [x] **Step 1: Run all model specs**
 
 ```bash
 cd server && bundle exec rspec spec/models/
@@ -813,7 +813,7 @@ cd server && bundle exec rspec spec/models/
 
 Expected: all examples PASS, 0 failures
 
-- [ ] **Step 2: Verify schema completeness**
+- [x] **Step 2: Verify schema completeness**
 
 ```bash
 cd server && rails runner 'puts ActiveRecord::Base.connection.tables.sort'
