@@ -126,6 +126,23 @@ export async function createSessionFromTemplate(data: { workout_template_id: num
       return map
     }, {})
 
+  const exerciseMetrics = included
+    .filter((inc) => inc.type === 'exercise_metric')
+    .reduce<Record<string, Record<string, unknown>>>((map, inc) => {
+      map[inc.id] = { ...(inc.attributes as Record<string, unknown>), id: Number(inc.id) }
+      return map
+    }, {})
+
+  Object.values(exercises).forEach((ex) => {
+    const exerciseData = res.data.included!.find(
+      (inc) => inc.type === 'exercise' && inc.id === String(ex.id)
+    )
+    const metricsRel = (exerciseData as { relationships?: { exercise_metrics?: { data?: Array<{ id: string }> } } }).relationships?.exercise_metrics?.data
+    if (metricsRel) {
+      ex.exercise_metrics = metricsRel.map((m) => exerciseMetrics[m.id]).filter(Boolean)
+    }
+  })
+
   const sessionExercises = included
     .filter((inc) => inc.type === 'session_exercise')
     .map((inc) => {
