@@ -14,12 +14,27 @@ export async function getTemplates(): Promise<WorkoutTemplate[]> {
 export async function getTemplate(id: number): Promise<WorkoutTemplate> {
   const res = await apiClient.get<TemplateResponse>(`/workout_templates/${id}`)
   const attrs = res.data.data.attributes
-  const templateExercises = (res.data.included || [])
+  const included = res.data.included || []
+
+  const exercises = included
+    .filter((inc) => inc.type === 'exercise')
+    .reduce<Record<string, Record<string, unknown>>>((map, inc) => {
+      map[inc.id] = { ...(inc.attributes as Record<string, unknown>), id: Number(inc.id) }
+      return map
+    }, {})
+
+  const templateExercises = included
     .filter((inc) => inc.type === 'workout_template_exercise')
-    .map((inc) => ({
-      ...(inc.attributes as Record<string, unknown>),
-      id: Number(inc.id),
-    })) as WorkoutTemplate['workout_template_exercises']
+    .map((inc) => {
+      const incAttrs = inc.attributes as Record<string, unknown>
+      const relData = (inc as { relationships?: { exercise?: { data?: { id: string } } } }).relationships?.exercise?.data
+      const exercise = relData ? exercises[relData.id] : undefined
+      return {
+        ...incAttrs,
+        id: Number(inc.id),
+        exercise: exercise as WorkoutTemplate['workout_template_exercises'][number]['exercise'],
+      }
+    }) as WorkoutTemplate['workout_template_exercises']
 
   return { ...attrs, id: Number(res.data.data.id), workout_template_exercises: templateExercises }
 }

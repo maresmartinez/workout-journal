@@ -1,3 +1,5 @@
+WorkoutSession.destroy_all
+WorkoutTemplate.destroy_all
 Exercise.destroy_all
 
 strength_exercises = [
