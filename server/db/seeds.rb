@@ -4,32 +4,26 @@ Exercise.destroy_all
 
 strength_exercises = [
   { name: 'Bench Press', metrics: [
-    { name: 'sets', metric_type: :integer },
     { name: 'reps', metric_type: :integer },
     { name: 'weight', metric_type: :decimal, unit: 'lbs' }
   ] },
   { name: 'Squat', metrics: [
-    { name: 'sets', metric_type: :integer },
     { name: 'reps', metric_type: :integer },
     { name: 'weight', metric_type: :decimal, unit: 'lbs' }
   ] },
   { name: 'Deadlift', metrics: [
-    { name: 'sets', metric_type: :integer },
     { name: 'reps', metric_type: :integer },
     { name: 'weight', metric_type: :decimal, unit: 'lbs' }
   ] },
   { name: 'Overhead Press', metrics: [
-    { name: 'sets', metric_type: :integer },
     { name: 'reps', metric_type: :integer },
     { name: 'weight', metric_type: :decimal, unit: 'lbs' }
   ] },
   { name: 'Pull-Up', metrics: [
-    { name: 'sets', metric_type: :integer },
     { name: 'reps', metric_type: :integer },
     { name: 'weight', metric_type: :decimal, unit: 'lbs' }
   ] },
   { name: 'Barbell Row', metrics: [
-    { name: 'sets', metric_type: :integer },
     { name: 'reps', metric_type: :integer },
     { name: 'weight', metric_type: :decimal, unit: 'lbs' }
   ] }
@@ -51,7 +45,6 @@ cardio_exercises = [
 
 bodyweight_exercises = [
   { name: 'Push-Up', metrics: [
-    { name: 'sets', metric_type: :integer },
     { name: 'reps', metric_type: :integer }
   ] },
   { name: 'Plank', metrics: [
