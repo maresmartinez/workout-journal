@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTemplate } from '../hooks/useTemplates'
-import { useCreateSession } from '../hooks/useSessions'
+import { useCreateSessionFromTemplate } from '../hooks/useSessions'
 import PageHeader from '../components/PageHeader'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ErrorMessage from '../components/ErrorMessage'
@@ -10,13 +10,10 @@ export default function TemplateDetail() {
   const navigate = useNavigate()
   const templateId = Number(id)
   const { data: template, isLoading, error } = useTemplate(templateId)
-  const createSession = useCreateSession()
+  const createFromTemplate = useCreateSessionFromTemplate()
 
   async function handleStartFromTemplate() {
-    const session = await createSession.mutateAsync({
-      name: template!.name,
-      started_at: new Date().toISOString(),
-    })
+    const session = await createFromTemplate.mutateAsync({ workout_template_id: templateId })
     navigate(`/workout/${session.id}`)
   }
 
@@ -36,7 +33,7 @@ export default function TemplateDetail() {
         action={
           <button
             onClick={handleStartFromTemplate}
-            disabled={createSession.isPending}
+            disabled={createFromTemplate.isPending}
             className="rounded bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 disabled:opacity-50"
           >
             Start Workout
