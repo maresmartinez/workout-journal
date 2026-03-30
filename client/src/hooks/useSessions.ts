@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
-  getSessions, getSession, createSession, updateSession, deleteSession, getSummary,
+  getSessions, getSession, createSession, createSessionFromTemplate, updateSession, deleteSession, getSummary,
   addSessionExercise,  removeSessionExercise,
   createLog, updateLog, deleteLog,
 } from '../api/sessions'
@@ -32,6 +32,16 @@ export function useCreateSession() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: createSession,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['sessions'] })
+    },
+  })
+}
+
+export function useCreateSessionFromTemplate() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: createSessionFromTemplate,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sessions'] })
     },

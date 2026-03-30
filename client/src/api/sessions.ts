@@ -113,3 +113,32 @@ export async function updateLog(sessionId: number, seId: number, logId: number, 
 export async function deleteLog(sessionId: number, seId: number, logId: number): Promise<void> {
   await apiClient.delete(`/workout_sessions/${sessionId}/session_exercises/${seId}/logs/${logId}`)
 }
+
+export async function createSessionFromTemplate(data: { workout_template_id: number; name?: string }): Promise<WorkoutSession> {
+  const res = await apiClient.post<SessionResponse>('/workout_sessions/create_from_template', data)
+  const attrs = res.data.data.attributes
+  const included = res.data.included || []
+
+  const exercises = included
+    .filter((inc) => inc.type === 'exercise')
+    .reduce<Record<string, Record<string, unknown>>>((map, inc) => {
+      map[inc.id] = { ...(inc.attributes as Record<string, unknown>), id: Number(inc.id) }
+      return map
+    }, {})
+
+  const sessionExercises = included
+    .filter((inc) => inc.type === 'session_exercise')
+    .map((inc) => {
+      const incAttrs = inc.attributes as Record<string, unknown>
+      const exerciseRel = (inc as { relationships?: { exercise?: { data?: { id: string } } } }).relationships?.exercise?.data
+      const exercise = exerciseRel ? exercises[exerciseRel.id] : undefined
+      return {
+        ...incAttrs,
+        id: Number(inc.id),
+        exercise: exercise as SessionExercise['exercise'],
+        session_exercise_logs: [] as SessionExerciseLog[],
+      }
+    }) as SessionExercise[]
+
+  return { ...attrs, id: Number(res.data.data.id), session_exercises: sessionExercises }
+}
