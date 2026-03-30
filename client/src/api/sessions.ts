@@ -13,7 +13,58 @@ export async function getSessions(): Promise<WorkoutSession[]> {
 export async function getSession(id: number): Promise<WorkoutSession> {
   const res = await apiClient.get<SessionResponse>(`/workout_sessions/${id}`)
   const attrs = res.data.data.attributes
-  return { ...attrs, id: Number(res.data.data.id), session_exercises: [] }
+  const included = res.data.included || []
+
+  const exercises = included
+    .filter((inc) => inc.type === 'exercise')
+    .reduce<Record<string, Record<string, unknown>>>((map, inc) => {
+      map[inc.id] = { ...(inc.attributes as Record<string, unknown>), id: Number(inc.id) }
+      return map
+    }, {})
+
+  const exerciseMetrics = included
+    .filter((inc) => inc.type === 'exercise_metric')
+    .reduce<Record<string, Record<string, unknown>>>((map, inc) => {
+      map[inc.id] = { ...(inc.attributes as Record<string, unknown>), id: Number(inc.id) }
+      return map
+    }, {})
+
+  Object.values(exercises).forEach((ex) => {
+    const exerciseData = res.data.included!.find(
+      (inc) => inc.type === 'exercise' && inc.id === String(ex.id)
+    )
+    const metricsRel = (exerciseData as { relationships?: { exercise_metrics?: { data?: Array<{ id: string }> } } }).relationships?.exercise_metrics?.data
+    if (metricsRel) {
+      ex.exercise_metrics = metricsRel.map((m) => exerciseMetrics[m.id]).filter(Boolean)
+    }
+  })
+
+  const logs = included
+    .filter((inc) => inc.type === 'session_exercise_log')
+    .reduce<Record<string, Record<string, unknown>>>((map, inc) => {
+      map[inc.id] = { ...(inc.attributes as Record<string, unknown>), id: Number(inc.id) }
+      return map
+    }, {})
+
+  const sessionExercises = included
+    .filter((inc) => inc.type === 'session_exercise')
+    .map((inc) => {
+      const incAttrs = inc.attributes as Record<string, unknown>
+      const exerciseRel = (inc as { relationships?: { exercise?: { data?: { id: string } } } }).relationships?.exercise?.data
+      const exercise = exerciseRel ? exercises[exerciseRel.id] : undefined
+      const logsRel = (inc as { relationships?: { session_exercise_logs?: { data?: Array<{ id: string }> } } }).relationships?.session_exercise_logs?.data
+      const sessionExerciseLogs = logsRel
+        ? logsRel.map((l) => logs[l.id]).filter(Boolean)
+        : []
+      return {
+        ...incAttrs,
+        id: Number(inc.id),
+        exercise: exercise as SessionExercise['exercise'],
+        session_exercise_logs: sessionExerciseLogs as unknown as SessionExerciseLog[],
+      }
+    }) as SessionExercise[]
+
+  return { ...attrs, id: Number(res.data.data.id), session_exercises: sessionExercises }
 }
 
 export async function createSession(data: { name?: string; started_at: string }): Promise<WorkoutSession> {
