@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :exercises
       resources :workout_templates
       get "/workout_sessions/summary", to: "workout_sessions#summary"
+      post "/workout_sessions/create_from_template", to: "workout_sessions#create_from_template"
       resources :workout_sessions do
         resources :session_exercises do
           resources :logs, controller: "session_exercise_logs"

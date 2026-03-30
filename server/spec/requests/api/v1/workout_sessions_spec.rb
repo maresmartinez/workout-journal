@@ -51,6 +51,55 @@ RSpec.describe 'Api::V1::WorkoutSessions', type: :request do
     end
   end
 
+  describe 'POST /api/v1/workout_sessions/create_from_template' do
+    it 'creates a session with exercises from a template' do
+      template = create(:workout_template, name: 'Push Day')
+      ex1 = create(:exercise, name: 'Bench Press')
+      ex2 = create(:exercise, name: 'Overhead Press')
+      create(:workout_template_exercise, workout_template: template, exercise: ex1, position: 1, notes: 'warm up')
+      create(:workout_template_exercise, workout_template: template, exercise: ex2, position: 2)
+
+      expect {
+        post '/api/v1/workout_sessions/create_from_template', params: { workout_template_id: template.id }
+      }.to change(WorkoutSession, :count).by(1).and change(SessionExercise, :count).by(2)
+
+      expect(response).to have_http_status(:created)
+      json = JSON.parse(response.body)
+      expect(json['data']['attributes']['name']).to eq('Push Day')
+      expect(json['data']['attributes']['status']).to eq('in_progress')
+
+      session = WorkoutSession.last
+      ses = session.session_exercises.order(:position)
+      expect(ses.pluck(:exercise_id)).to eq([ ex1.id, ex2.id ])
+      expect(ses.first.notes).to eq('warm up')
+    end
+
+    it 'returns 404 when template not found' do
+      post '/api/v1/workout_sessions/create_from_template', params: { workout_template_id: 999999 }
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'creates session even if template has no exercises' do
+      template = create(:workout_template, name: 'Empty')
+
+      expect {
+        post '/api/v1/workout_sessions/create_from_template', params: { workout_template_id: template.id }
+      }.to change(WorkoutSession, :count).by(1)
+
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'uses provided name over template name' do
+      template = create(:workout_template, name: 'Push Day')
+
+      post '/api/v1/workout_sessions/create_from_template', params: { workout_template_id: template.id, name: 'Custom Name' }
+
+      json = JSON.parse(response.body)
+      expect(json['data']['attributes']['name']).to eq('Custom Name')
+    end
+  end
+
   describe 'PATCH /api/v1/workout_sessions/:id' do
     it 'completes a session' do
       session = create(:workout_session)

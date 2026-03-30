@@ -31,6 +31,35 @@ class Api::V1::WorkoutSessionsController < ApplicationController
     end
   end
 
+  def create_from_template
+    template = WorkoutTemplate.find_by(id: params[:workout_template_id])
+    unless template
+      render json: { error: "Workout template not found" }, status: :not_found
+      return
+    end
+
+    session = WorkoutSession.new(
+      name: params[:name] || template.name,
+      started_at: Time.current,
+      status: :in_progress
+    )
+
+    ActiveRecord::Base.transaction do
+      session.save!
+      template.workout_template_exercises.order(:position).each do |wte|
+        session.session_exercises.create!(
+          exercise_id: wte.exercise_id,
+          position: wte.position,
+          notes: wte.notes
+        )
+      end
+    end
+
+    render json: WorkoutSessionSerializer.new(session, include: [ :session_exercises, :'session_exercises.exercise', :'session_exercises.session_exercise_logs' ]).serializable_hash.to_json, status: :created
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+  end
+
   def update
     if @session.update(session_params)
       render json: WorkoutSessionSerializer.new(@session, include: [ :session_exercises ]).serializable_hash.to_json
