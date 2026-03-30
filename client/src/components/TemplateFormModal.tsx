@@ -1,5 +1,21 @@
 import { useState } from 'react'
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
 import type { Exercise } from '../types'
+import SortableExerciseRow from './SortableExerciseRow'
+import ExerciseSearchRow from './ExerciseSearchRow'
 
 interface TemplateFormModalProps {
   open: boolean
@@ -20,14 +36,37 @@ interface TemplateFormModalProps {
 export default function TemplateFormModal({ open, onClose, exercises, onSubmit, isPending }: TemplateFormModalProps) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [selectedIds, setSelectedIds] = useState<number[]>([])
+  const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([])
+  const [isAdding, setIsAdding] = useState(false)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  )
 
   if (!open) return null
 
-  function toggleExercise(id: number) {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    )
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+
+    setSelectedExercises((prev) => {
+      const oldIndex = prev.findIndex((e) => e.id === active.id)
+      const newIndex = prev.findIndex((e) => e.id === over.id)
+      const updated = [...prev]
+      const [moved] = updated.splice(oldIndex, 1)
+      updated.splice(newIndex, 0, moved)
+      return updated
+    })
+  }
+
+  function handleSelectExercise(exercise: Exercise) {
+    setSelectedExercises((prev) => [...prev, exercise])
+    setIsAdding(false)
+  }
+
+  function handleRemoveExercise(id: number) {
+    setSelectedExercises((prev) => prev.filter((e) => e.id !== id))
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -35,8 +74,8 @@ export default function TemplateFormModal({ open, onClose, exercises, onSubmit, 
     onSubmit({
       name,
       description,
-      workout_template_exercises_attributes: selectedIds.map((exerciseId, index) => ({
-        exercise_id: exerciseId,
+      workout_template_exercises_attributes: selectedExercises.map((exercise, index) => ({
+        exercise_id: exercise.id,
         position: index + 1,
         notes: '',
       })),
@@ -45,7 +84,10 @@ export default function TemplateFormModal({ open, onClose, exercises, onSubmit, 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
-      <div className="w-full max-w-lg rounded-lg bg-white p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-lg bg-white p-6 shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2 className="text-lg font-bold">Create Workout Template</h2>
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
@@ -70,37 +112,39 @@ export default function TemplateFormModal({ open, onClose, exercises, onSubmit, 
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Exercises</label>
-            <p className="text-xs text-gray-400 mb-2">Select exercises in order</p>
-            <div className="max-h-60 space-y-1 overflow-y-auto">
-              {exercises.map((ex) => (
-                <label
-                  key={ex.id}
-                  className={`flex cursor-pointer items-center gap-2 rounded border p-2 text-sm ${
-                    selectedIds.includes(ex.id)
-                      ? 'border-blue-400 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
+            <div className="mt-2 space-y-1">
+              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext items={selectedExercises.map((e) => e.id)} strategy={verticalListSortingStrategy}>
+                  {selectedExercises.map((exercise) => (
+                    <SortableExerciseRow
+                      key={exercise.id}
+                      exercise={exercise}
+                      onRemove={handleRemoveExercise}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
+
+              {isAdding && (
+                <ExerciseSearchRow
+                  exercises={exercises}
+                  existingIds={selectedExercises.map((e) => e.id)}
+                  onSelect={handleSelectExercise}
+                  onCancel={() => setIsAdding(false)}
+                />
+              )}
+
+              {!isAdding && (
+                <button
+                  type="button"
+                  onClick={() => setIsAdding(true)}
+                  className="w-full rounded-lg border-2 border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 hover:border-gray-400 hover:text-gray-600"
                 >
-                  <input
-                    type="checkbox"
-                    checked={selectedIds.includes(ex.id)}
-                    onChange={() => toggleExercise(ex.id)}
-                    className="rounded"
-                  />
-                  <span className="font-medium">{ex.name}</span>
-                  <span className="text-xs text-gray-400">
-                    {ex.exercise_metrics.map((m) => m.name).join(', ')}
-                  </span>
-                </label>
-              ))}
+                  + Add Exercise
+                </button>
+              )}
             </div>
           </div>
-
-          {selectedIds.length > 0 && (
-            <div className="text-xs text-gray-500">
-              Order: {selectedIds.map((id) => exercises.find((e) => e.id === id)?.name).join(' → ')}
-            </div>
-          )}
 
           <div className="flex justify-end gap-2 pt-2">
             <button type="button" onClick={onClose} className="rounded border border-gray-300 px-4 py-2 text-sm">
