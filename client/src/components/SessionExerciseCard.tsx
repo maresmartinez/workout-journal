@@ -54,6 +54,8 @@ export default function SessionExerciseCard({
   )
   const [editingLogId, setEditingLogId] = useState<number | null>(null)
   const [editValues, setEditValues] = useState<Record<string, string>>({})
+  const [newNotes, setNewNotes] = useState('')
+  const [editNotes, setEditNotes] = useState('')
 
   function handleAddSet() {
     const parsed: Record<string, unknown> = {}
@@ -62,8 +64,9 @@ export default function SessionExerciseCard({
       if (raw === '' || raw === undefined) continue
       parsed[m.name] = m.metric_type === 'decimal' ? parseFloat(raw) : m.metric_type === 'integer' ? parseInt(raw, 10) : raw
     }
-    onCreateLog(sessionExercise.id, parsed)
+    onCreateLog(sessionExercise.id, parsed, newNotes || undefined)
     setNewValues(buildEmptyValues(metrics))
+    setNewNotes('')
   }
 
   function handleSaveEdit(logId: number) {
@@ -73,17 +76,18 @@ export default function SessionExerciseCard({
       if (raw === '' || raw === undefined) continue
       parsed[m.name] = m.metric_type === 'decimal' ? parseFloat(raw) : m.metric_type === 'integer' ? parseInt(raw, 10) : raw
     }
-    onUpdateLog(sessionExercise.id, logId, parsed)
+    onUpdateLog(sessionExercise.id, logId, parsed, editNotes || undefined)
     setEditingLogId(null)
   }
 
-  function startEdit(logId: number, currentValues: Record<string, unknown>) {
+  function startEdit(log: { id: number; values: Record<string, unknown>; notes?: string | null }) {
     const sv: Record<string, string> = {}
     for (const m of metrics) {
-      sv[m.name] = currentValues[m.name] !== undefined ? String(currentValues[m.name]) : ''
+      sv[m.name] = log.values[m.name] !== undefined ? String(log.values[m.name]) : ''
     }
     setEditValues(sv)
-    setEditingLogId(logId)
+    setEditNotes(log.notes || '')
+    setEditingLogId(log.id)
   }
 
   const metricHeaders = metrics.map((m) => m.name + (m.unit ? ` (${m.unit})` : ''))
@@ -135,8 +139,16 @@ export default function SessionExerciseCard({
                           className="w-20 rounded border border-gray-300 px-2 py-1 text-sm"
                         />
                       </td>
-                    ))}
-                    <td className="px-3 py-2">
+                     ))}
+                     <td className="px-3 py-2">
+                       <input
+                         type="text"
+                         value={editNotes}
+                         onChange={(e) => setEditNotes(e.target.value)}
+                         className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
+                       />
+                     </td>
+                     <td className="px-3 py-2">
                       <button onClick={() => handleSaveEdit(log.id)} className="text-xs text-blue-600 hover:underline">Save</button>
                     </td>
                     <td className="px-2 py-2">
@@ -152,7 +164,7 @@ export default function SessionExerciseCard({
                     <td className="px-3 py-2 text-gray-400 text-xs">{log.notes || '—'}</td>
                     <td className="px-2 py-2">
                       <div className="flex gap-1">
-                        <button onClick={() => startEdit(log.id, log.values)} className="text-xs text-blue-400 hover:text-blue-600">Edit</button>
+                         <button onClick={() => startEdit(log)} className="text-xs text-blue-400 hover:text-blue-600">Edit</button>
                         <button onClick={() => onDeleteLog(sessionExercise.id, log.id)} className="text-xs text-red-400 hover:text-red-600">Del</button>
                       </div>
                     </td>
@@ -181,6 +193,18 @@ export default function SessionExerciseCard({
               />
             </div>
           ))}
+          <div className="flex-1">
+            <label className="block text-xs text-gray-400">Notes</label>
+            <input
+              type="text"
+              value={newNotes}
+              onChange={(e) => setNewNotes(e.target.value)}
+              className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleAddSet()
+              }}
+            />
+          </div>
           <button
             onClick={handleAddSet}
             disabled={isCreatingLog}
