@@ -92,11 +92,11 @@ export default function ActiveWorkout() {
               sessionExercise={se}
               exercise={exercise}
               sessionId={sessionId}
-              onCreateLog={(seId, values) =>
-                createLog.mutate({ sessionId, seId, data: { values } })
+              onCreateLog={(seId, values, notes) =>
+                createLog.mutate({ sessionId, seId, data: { values, notes } })
               }
-              onUpdateLog={(seId, logId, values) =>
-                updateLog.mutate({ sessionId, seId, logId, data: { values } })
+              onUpdateLog={(seId, logId, values, notes) =>
+                updateLog.mutate({ sessionId, seId, logId, data: { values, notes } })
               }
               onDeleteLog={(seId, logId) =>
                 deleteLog.mutate({ sessionId, seId, logId })
