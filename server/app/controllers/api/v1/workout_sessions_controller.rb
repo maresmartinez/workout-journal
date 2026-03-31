@@ -22,10 +22,9 @@ class Api::V1::WorkoutSessionsController < ApplicationController
 
   def create
     session = WorkoutSession.new(session_params)
-    session.status = :in_progress
 
     if session.save
-      render json: WorkoutSessionSerializer.new(session).serializable_hash.to_json, status: :created
+      render json: WorkoutSessionSerializer.new(session, include: [ :session_exercises, :'session_exercises.exercise', :'session_exercises.session_exercise_logs' ]).serializable_hash.to_json, status: :created
     else
       render json: { errors: session.errors.full_messages }, status: :unprocessable_entity
     end
@@ -82,6 +81,12 @@ class Api::V1::WorkoutSessionsController < ApplicationController
   end
 
   def session_params
-    params.require(:workout_session).permit(:name, :started_at, :ended_at, :status)
+    params.require(:workout_session).permit(
+      :name, :started_at, :ended_at, :status,
+      session_exercises_attributes: [
+        :exercise_id, :position, :notes,
+        { session_exercise_logs_attributes: [ { values: {} }, :notes ] }
+      ]
+    )
   end
 end

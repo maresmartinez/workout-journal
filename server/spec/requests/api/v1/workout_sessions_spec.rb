@@ -51,6 +51,61 @@ RSpec.describe 'Api::V1::WorkoutSessions', type: :request do
     end
   end
 
+  describe 'POST /api/v1/workout_sessions (batch with nested)' do
+    it 'creates a session with exercises and logs in one request' do
+      exercise = create(:exercise, name: 'Bench Press')
+
+      expect {
+        post '/api/v1/workout_sessions', as: :json, params: {
+          workout_session: {
+            name: 'Push Day',
+            started_at: Time.current.iso8601,
+            ended_at: Time.current.iso8601,
+            status: 'completed',
+            session_exercises_attributes: [
+              {
+                exercise_id: exercise.id,
+                position: 1,
+                notes: 'warm up',
+                session_exercise_logs_attributes: [
+                  { values: { 'sets' => 3, 'reps' => 10, 'weight' => 135.0 } },
+                  { values: { 'sets' => 3, 'reps' => 8, 'weight' => 185.0 } }
+                ]
+              }
+            ]
+          }
+        }
+      }.to change(WorkoutSession, :count).by(1).and change(SessionExercise, :count).by(1).and change(SessionExerciseLog, :count).by(2)
+
+      expect(response).to have_http_status(:created)
+      json = JSON.parse(response.body)
+      expect(json['data']['attributes']['status']).to eq('completed')
+
+      session = WorkoutSession.last
+      se = session.session_exercises.first
+      expect(se.exercise_id).to eq(exercise.id)
+      expect(se.position).to eq(1)
+      expect(se.notes).to eq('warm up')
+      expect(se.session_exercise_logs.count).to eq(2)
+      expect(se.session_exercise_logs.first.values).to eq({ 'sets' => 3, 'reps' => 10, 'weight' => 135.0 })
+    end
+
+    it 'creates a session without exercises (blank workout finished)' do
+      expect {
+        post '/api/v1/workout_sessions', params: {
+          workout_session: {
+            started_at: Time.current.iso8601,
+            ended_at: Time.current.iso8601,
+            status: 'completed',
+            session_exercises_attributes: []
+          }
+        }
+      }.to change(WorkoutSession, :count).by(1)
+
+      expect(response).to have_http_status(:created)
+    end
+  end
+
   describe 'POST /api/v1/workout_sessions/create_from_template' do
     it 'creates a session with exercises from a template' do
       template = create(:workout_template, name: 'Push Day')
