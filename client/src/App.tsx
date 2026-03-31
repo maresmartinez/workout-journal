@@ -21,7 +21,7 @@ export default function App() {
           <Route path="/exercises/:id" element={<ExerciseDetail />} />
           <Route path="/templates" element={<Templates />} />
           <Route path="/templates/:id" element={<TemplateDetail />} />
-          <Route path="/workout/:id" element={<ActiveWorkout />} />
+          <Route path="/workout/draft" element={<ActiveWorkout />} />
           <Route path="/history" element={<History />} />
           <Route path="/history/:id" element={<SessionDetail />} />
           <Route path="/progress" element={<Progress />} />
