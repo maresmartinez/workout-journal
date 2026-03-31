@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSessionSummary, useSessions, useCreateSession, useCreateSessionFromTemplate } from '../hooks/useSessions'
+import { useSessionSummary, useSessions } from '../hooks/useSessions'
 import { useTemplates } from '../hooks/useTemplates'
+import { useWorkoutDraft } from '../hooks/useWorkoutDraft'
 import PageHeader from '../components/PageHeader'
 import LoadingSpinner from '../components/LoadingSpinner'
-import ErrorMessage from '../components/ErrorMessage'
 import StartWorkoutModal from '../components/StartWorkoutModal'
+import type { WorkoutDraft } from '../types/draft'
 
 function StatCard({ label, value, sub, bg }: { label: string; value: string; sub?: string; bg: string }) {
   return (
@@ -33,9 +34,18 @@ export default function Dashboard() {
   const { data: summary, isLoading: summaryLoading } = useSessionSummary()
   const { data: sessions, isLoading: sessionsLoading } = useSessions()
   const { data: templates } = useTemplates()
-  const createSession = useCreateSession()
-  const createFromTemplate = useCreateSessionFromTemplate()
+  const { startBlank, startFromTemplate, clearDraft } = useWorkoutDraft()
   const [modalOpen, setModalOpen] = useState(false)
+  const [existingDraft, setExistingDraft] = useState<WorkoutDraft | null>(null)
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('workout_draft')
+      if (raw) setExistingDraft(JSON.parse(raw))
+    } catch {
+      // ignore
+    }
+  }, [])
 
   const recentSessions = (sessions || [])
     .filter((s) => s.status === 'completed')
@@ -43,30 +53,62 @@ export default function Dashboard() {
 
   const lastSession = recentSessions[0]
 
-  const isPending = createSession.isPending || createFromTemplate.isPending
-
   async function handleStartFromTemplate(templateId: number) {
-    const session = await createFromTemplate.mutateAsync({ workout_template_id: templateId })
-    navigate(`/workout/${session.id}`)
+    const template = templates?.find((t) => t.id === templateId)
+    if (!template) return
+    startFromTemplate(templateId, template.name, template.workout_template_exercises)
+    navigate('/workout/draft')
   }
 
   async function handleStartBlank() {
-    const session = await createSession.mutateAsync({
-      name: undefined,
-      started_at: new Date().toISOString(),
-    })
-    navigate(`/workout/${session.id}`)
+    startBlank()
+    navigate('/workout/draft')
+  }
+
+  function handleResume() {
+    navigate('/workout/draft')
+  }
+
+  function handleDiscardDraft() {
+    if (!confirm('Discard this workout? All data will be lost.')) return
+    clearDraft()
+    setExistingDraft(null)
   }
 
   if (summaryLoading || sessionsLoading) return <LoadingSpinner />
-  if (createSession.isError) return <ErrorMessage message={createSession.error.message} />
-  if (createFromTemplate.isError) return <ErrorMessage message={createFromTemplate.error.message} />
 
   return (
     <div>
       <PageHeader title="Dashboard" />
 
       <div className="px-6 pb-6">
+        {existingDraft && (
+          <div className="mb-4 flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
+            <div>
+              <p className="text-sm font-medium text-amber-800">
+                You have an unfinished workout
+              </p>
+              <p className="text-xs text-amber-600">
+                Started {formatRelativeDate(existingDraft.startedAt)} &middot; {existingDraft.exercises.length} exercise{existingDraft.exercises.length !== 1 ? 's' : ''}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={handleResume}
+                className="rounded bg-amber-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-amber-700"
+              >
+                Resume
+              </button>
+              <button
+                onClick={handleDiscardDraft}
+                className="rounded border border-amber-300 px-3 py-1.5 text-sm text-amber-700 hover:bg-amber-100"
+              >
+                Discard
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <StatCard
             label="Last Workout"
@@ -75,16 +117,14 @@ export default function Dashboard() {
             bg="bg-blue-50"
           />
           <StatCard
-            label="Total Sessions"
+            label="Completed Sessions"
             value={summary ? String(summary.completed_sessions) : '0'}
-            sub={summary ? `of ${summary.total_sessions} total` : undefined}
             bg="bg-green-50"
           />
         </div>
 
         <button
           onClick={() => setModalOpen(true)}
-          disabled={isPending}
           className="mt-4 w-full rounded-md bg-blue-600 px-4 py-3 text-base font-medium text-white hover:bg-blue-700 disabled:opacity-50"
         >
           + Start Workout
@@ -117,7 +157,7 @@ export default function Dashboard() {
         templates={templates || []}
         onSelectTemplate={handleStartFromTemplate}
         onSelectBlank={handleStartBlank}
-        isPending={isPending}
+        isPending={false}
       />
     </div>
   )
