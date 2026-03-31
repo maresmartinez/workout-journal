@@ -4,4 +4,6 @@ class WorkoutSession < ApplicationRecord
   validates :started_at, presence: true
 
   has_many :session_exercises, dependent: :destroy
+
+  accepts_nested_attributes_for :session_exercises
 end

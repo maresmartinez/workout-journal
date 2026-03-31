@@ -42,4 +42,24 @@ RSpec.describe WorkoutSession, type: :model do
     session.session_exercises.create!(exercise: exercise, position: 1)
     expect { session.destroy }.to change(SessionExercise, :count).by(-1)
   end
+
+  it 'accepts nested attributes for session_exercises with logs' do
+    exercise = Exercise.create!(name: 'Squat', exercise_type: 'built_in')
+    session = WorkoutSession.create!(
+      started_at: Time.current,
+      status: :completed,
+      session_exercises_attributes: [
+        {
+          exercise_id: exercise.id,
+          position: 1,
+          session_exercise_logs_attributes: [
+            { values: { 'sets' => 3, 'reps' => 10 } }
+          ]
+        }
+      ]
+    )
+    expect(session.session_exercises.count).to eq(1)
+    expect(session.session_exercises.first.session_exercise_logs.count).to eq(1)
+    expect(session.session_exercises.first.session_exercise_logs.first.values).to eq({ 'sets' => 3, 'reps' => 10 })
+  end
 end
