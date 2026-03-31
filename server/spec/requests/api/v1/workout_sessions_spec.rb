@@ -99,7 +99,7 @@ RSpec.describe 'Api::V1::WorkoutSessions', type: :request do
             status: 'completed',
             session_exercises_attributes: []
           }
-        }
+        }, as: :json
       }.to change(WorkoutSession, :count).by(1)
 
       expect(response).to have_http_status(:created)

@@ -60,7 +60,7 @@ class Api::V1::WorkoutSessionsController < ApplicationController
   end
 
   def update
-    if @session.update(session_params)
+    if @session.update(update_params)
       render json: WorkoutSessionSerializer.new(@session, include: [ :session_exercises ]).serializable_hash.to_json
     else
       render json: { errors: @session.errors.full_messages }, status: :unprocessable_entity
@@ -88,5 +88,9 @@ class Api::V1::WorkoutSessionsController < ApplicationController
         { session_exercise_logs_attributes: [ { values: {} }, :notes ] }
       ]
     )
+  end
+
+  def update_params
+    params.require(:workout_session).permit(:name, :started_at, :ended_at, :status)
   end
 end
