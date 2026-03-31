@@ -139,20 +139,20 @@ export default function SessionExerciseCard({
                           className="w-20 rounded border border-gray-300 px-2 py-1 text-sm"
                         />
                       </td>
-                     ))}
-                     <td className="px-3 py-2">
-                       <input
-                         type="text"
-                         value={editNotes}
-                         onChange={(e) => setEditNotes(e.target.value)}
-                         className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
-                       />
-                     </td>
-                     <td className="px-3 py-2">
-                      <button onClick={() => handleSaveEdit(log.id)} className="text-xs text-blue-600 hover:underline">Save</button>
+                    ))}
+                    <td className="px-3 py-2">
+                        <input
+                          type="text"
+                          value={editNotes}
+                          onChange={(e) => setEditNotes(e.target.value)}
+                          className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
+                        />
                     </td>
                     <td className="px-2 py-2">
-                      <button onClick={() => setEditingLogId(null)} className="text-xs text-gray-400 hover:underline">Cancel</button>
+                      <div className="flex gap-1">
+                        <button onClick={() => handleSaveEdit(log.id)} className="text-xs text-blue-600 hover:underline">Save</button>
+                        <button onClick={() => setEditingLogId(null)} className="text-xs text-gray-400 hover:underline">Cancel</button>
+                      </div>
                     </td>
                   </>
                 ) : (
@@ -164,7 +164,7 @@ export default function SessionExerciseCard({
                     <td className="px-3 py-2 text-gray-400 text-xs">{log.notes || '—'}</td>
                     <td className="px-2 py-2">
                       <div className="flex gap-1">
-                         <button onClick={() => startEdit(log)} className="text-xs text-blue-400 hover:text-blue-600">Edit</button>
+                        <button onClick={() => startEdit(log)} className="text-xs text-blue-400 hover:text-blue-600">Edit</button>
                         <button onClick={() => onDeleteLog(sessionExercise.id, log.id)} className="text-xs text-red-400 hover:text-red-600">Del</button>
                       </div>
                     </td>
