@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSessionSummary, useSessions } from '../hooks/useSessions'
 import { useTemplates } from '../hooks/useTemplates'
@@ -36,16 +36,14 @@ export default function Dashboard() {
   const { data: templates } = useTemplates()
   const { startBlank, startFromTemplate, clearDraft } = useWorkoutDraft()
   const [modalOpen, setModalOpen] = useState(false)
-  const [existingDraft, setExistingDraft] = useState<WorkoutDraft | null>(null)
-
-  useEffect(() => {
+  const [existingDraft, setExistingDraft] = useState<WorkoutDraft | null>(() => {
     try {
       const raw = localStorage.getItem('workout_draft')
-      if (raw) setExistingDraft(JSON.parse(raw))
+      return raw ? JSON.parse(raw) : null
     } catch {
-      // ignore
+      return null
     }
-  }, [])
+  })
 
   const recentSessions = (sessions || [])
     .filter((s) => s.status === 'completed')

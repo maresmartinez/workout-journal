@@ -5,7 +5,6 @@ import { useNavigationGuard } from '../hooks/useNavigationGuard'
 import { useCreateSessionBatch } from '../hooks/useSessions'
 import { useExercises } from '../hooks/useExercises'
 import { useTimer } from '../hooks/useTimer'
-import ErrorMessage from '../components/ErrorMessage'
 import DraftExerciseCard from '../components/DraftExerciseCard'
 import ExercisePickerModal from '../components/ExercisePickerModal'
 
