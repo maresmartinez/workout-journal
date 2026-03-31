@@ -3,6 +3,7 @@ import {
   getSessions, getSession, createSession, createSessionFromTemplate, updateSession, deleteSession, getSummary,
   addSessionExercise,  removeSessionExercise,
   createLog, updateLog, deleteLog,
+  createSessionBatch,
 } from '../api/sessions'
 
 
@@ -115,6 +116,16 @@ export function useDeleteLog() {
     mutationFn: ({ sessionId, seId, logId }: { sessionId: number; seId: number; logId: number }) => deleteLog(sessionId, seId, logId),
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['sessions', variables.sessionId] })
+    },
+  })
+}
+
+export function useCreateSessionBatch() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: createSessionBatch,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['sessions'] })
     },
   })
 }
